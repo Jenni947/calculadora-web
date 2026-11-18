@@ -1,374 +1,108 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101014">
+    <title>CALC CLUB — Sua paixão em números</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-:root {
-    --background: #101014;
-    --accent: #ed172f;
-    --buttons: #24242b;
-    --text: #ffffff;
-    --panel: #19191f;
-    --border: rgba(255,255,255,.13);
-    --crest-image: none;
-}
+    <main class="app">
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        <header class="topo">
+            <div class="marca">
+                <span class="marca-icone">C</span>
+                <div>
+                    <h1>CALC CLUB</h1>
+                    <p>SUA PAIXÃO EM NÚMEROS</p>
+                </div>
+            </div>
 
-body {
-    min-height: 100vh;
-    padding: 35px 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:
-        radial-gradient(ellipse at top, #401016, transparent 55%),
-        var(--background);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-}
+            <button class="botao-config" id="abrirConfig"
+                aria-label="Personalizar calculadora">⚙</button>
+        </header>
 
-.app {
-    width: 100%;
-    max-width: 650px;
-    padding: 26px;
-    border: 1px solid var(--border);
-    border-radius: 25px;
-    background: linear-gradient(145deg, #1d1d24, #101014);
-    box-shadow: 0 30px 90px rgba(0,0,0,.65);
-    overflow: hidden;
-}
+        <section class="identidade">
+            <div class="escudo-fundo" id="escudoFundo"></div>
+            <div class="time-info">
+                <span class="etiqueta">EDIÇÃO DO TORCEDOR</span>
+                <h2 id="nomeTime">CORINTHIANS</h2>
+                <p>CALCULADORA PERSONALIZADA</p>
+            </div>
+        </section>
 
-.topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-}
+        <section class="calculadora">
+            <div class="visor-area">
+                <span class="visor-legenda">RESULTADO</span>
+                <input id="visor" type="text" value="0" readonly aria-label="Resultado da calculadora">
+            </div>
 
-.marca {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
+            <div class="botoes">
+                <button class="especial" onclick="limpar()">AC</button>
+                <button class="especial" onclick="apagar()">⌫</button>
+                <button class="operador" onclick="adicionar('/')">÷</button>
+                <button class="operador" onclick="adicionar('*')">×</button>
 
-.marca-icone {
-    width: 48px;
-    height: 48px;
-    display: grid;
-    place-items: center;
-    border-radius: 14px;
-    background: var(--accent);
-    color: white;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 25px;
-    font-weight: 800;
-}
+                <button onclick="adicionar('7')">7</button>
+                <button onclick="adicionar('8')">8</button>
+                <button onclick="adicionar('9')">9</button>
+                <button class="operador" onclick="adicionar('-')">−</button>
 
-.marca h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
+                <button onclick="adicionar('4')">4</button>
+                <button onclick="adicionar('5')">5</button>
+                <button onclick="adicionar('6')">6</button>
+                <button class="operador" onclick="adicionar('+')">+</button>
 
-.marca p {
-    margin-top: 5px;
-    color: #9999a3;
-    font-size: 9px;
-    letter-spacing: 2px;
-}
+                <button onclick="adicionar('1')">1</button>
+                <button onclick="adicionar('2')">2</button>
+                <button onclick="adicionar('3')">3</button>
+                <button class="igual" onclick="calcular()">=</button>
 
-.botao-config {
-    width: 46px;
-    height: 46px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--buttons);
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
-}
+                <button class="zero" onclick="adicionar('0')">0</button>
+                <button onclick="adicionar('.')">.</button>
+            </div>
+        </section>
 
-.identidade {
-    min-height: 180px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 22px;
-    padding: 25px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background:
-        linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.48)),
-        radial-gradient(circle at 80% 50%, #70202b, transparent 65%);
-}
+        <footer>
+            <span>CALC CLUB</span>
+            <span>FEITA PARA TORCER.</span>
+        </footer>
 
-.escudo-fundo {
-    position: absolute;
-    inset: 0;
-    background-image: var(--crest-image);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    opacity: .23;
-    filter: grayscale(35%);
-    pointer-events: none;
-}
+    </main>
 
-.time-info {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-}
+    <dialog id="painelConfig">
+        <div class="config-conteudo">
+            <div class="config-topo">
+                <div>
+                    <span class="etiqueta">PERSONALIZAÇÃO</span>
+                    <h2>Seu clube, seu estilo.</h2>
+                </div>
+                <button id="fecharConfig" class="fechar">×</button>
+            </div>
 
-.etiqueta {
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 3px;
-}
+            <label for="nomePersonalizado">Nome do time</label>
+            <input id="nomePersonalizado" type="text" value="CORINTHIANS" maxlength="25">
 
-.time-info h2 {
-    margin: 12px 0 7px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(22px, 6vw, 34px);
-    font-weight: 800;
-    letter-spacing: 1px;
-}
+            <label for="arquivoEscudo">Imagem do escudo</label>
+            <input id="arquivoEscudo" type="file" accept="image/png,image/jpeg,image/webp">
 
-.time-info p {
-    color: #b4b4bd;
-    font-size: 10px;
-    letter-spacing: 2px;
-}
+            <label for="corFundo">Cor de fundo</label>
+            <input id="corFundo" type="color" value="#101014">
 
-.calculadora {
-    position: relative;
-    padding: 22px;
-    border: 1px solid var(--border);
-    border-radius: 21px;
-    background: rgba(8,8,11,.88);
-    box-shadow: 0 15px 35px rgba(0,0,0,.3);
-}
+            <label for="corDestaque">Cor de destaque</label>
+            <input id="corDestaque" type="color" value="#ed172f">
 
-.visor-area {
-    margin-bottom: 20px;
-}
+            <label for="corBotoes">Cor dos botões</label>
+            <input id="corBotoes" type="color" value="#24242b">
 
-.visor-legenda {
-    display: block;
-    margin-bottom: 10px;
-    color: #888892;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 3px;
-}
+            <button id="aplicarTema" class="aplicar">APLICAR PERSONALIZAÇÃO</button>
+            <button id="restaurarTema" class="restaurar">RESTAURAR TEMA INICIAL</button>
+        </div>
+    </dialog>
 
-#visor {
-    width: 100%;
-    height: 100px;
-    padding: 15px;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    outline: none;
-    background: #111116;
-    color: var(--accent);
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(25px, 7vw, 39px);
-    font-weight: 700;
-    text-align: right;
-}
-
-.botoes {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 11px;
-}
-
-.botoes button {
-    min-width: 0;
-    height: 65px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--buttons);
-    color: white;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .2s ease;
-}
-
-.botoes button:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent);
-    box-shadow: 0 5px 20px color-mix(in srgb, var(--accent) 25%, transparent);
-}
-
-.botoes button:active {
-    transform: scale(.96);
-}
-
-.botoes .especial,
-.botoes .operador {
-    color: var(--accent);
-    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-}
-
-.botoes .igual {
-    grid-row: span 2;
-    height: auto;
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-    font-size: 28px;
-}
-
-.botoes .zero {
-    grid-column: span 2;
-}
-
-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 23px;
-    color: #777780;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-/* PERSONALIZACAO */
-
-#painelConfig {
-    width: min(92%, 420px);
-    max-height: 90vh;
-    margin: auto;
-    padding: 0;
-    overflow: auto;
-    border: 1px solid #41414a;
-    border-radius: 22px;
-    background: #17171d;
-    color: white;
-}
-
-#painelConfig::backdrop {
-    background: rgba(0,0,0,.82);
-    backdrop-filter: blur(8px);
-}
-
-.config-conteudo {
-    padding: 25px;
-}
-
-.config-topo {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 25px;
-}
-
-.config-topo h2 {
-    margin-top: 10px;
-    font-size: 21px;
-}
-
-.fechar {
-    width: 38px;
-    height: 38px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: #292930;
-    color: white;
-    font-size: 23px;
-    cursor: pointer;
-}
-
-.config-conteudo label {
-    display: block;
-    margin: 17px 0 9px;
-    color: #d4d4dc;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.config-conteudo input[type="text"] {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #41414a;
-    border-radius: 11px;
-    outline: none;
-    background: #0e0e13;
-    color: white;
-    font-size: 14px;
-}
-
-.config-conteudo input[type="file"] {
-    width: 100%;
-    color: #ccc;
-    font-size: 12px;
-}
-
-.config-conteudo input[type="color"] {
-    width: 100%;
-    height: 48px;
-    padding: 4px;
-    border: 1px solid #41414a;
-    border-radius: 10px;
-    background: #0e0e13;
-    cursor: pointer;
-}
-
-.aplicar,
-.restaurar {
-    width: 100%;
-    min-height: 48px;
-    margin-top: 20px;
-    border: 0;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.aplicar {
-    background: var(--accent);
-    color: white;
-}
-
-.restaurar {
-    margin-top: 10px;
-    border: 1px solid #555;
-    background: transparent;
-    color: white;
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: 15px 10px;
-    }
-
-    .app {
-        padding: 17px;
-    }
-
-    .calculadora {
-        padding: 15px;
-    }
-
-    .botoes {
-        gap: 8px;
-    }
-
-    .botoes button {
-        height: 58px;
-        font-size: 18px;
-    }
-
-    .botoes .igual {
-        height: auto;
-    }
-}
+    <script src="script.js"></script>
+</body>
+</html>
