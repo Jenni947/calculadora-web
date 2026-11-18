@@ -1,4 +1,3 @@
-
 const display = document.getElementById("display");
 const history = document.getElementById("history");
 const teamList = document.getElementById("team-list");
