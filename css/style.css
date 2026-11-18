@@ -1,14 +1,9 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
-
 :root {
-    --background: #101014;
-    --accent: #ed172f;
-    --buttons: #24242b;
-    --text: #ffffff;
-    --panel: #19191f;
-    --border: rgba(255,255,255,.13);
-    --crest-image: none;
+    --primary: #ed101c;
+    --secondary: #8b0000;
+    --glow: rgba(237, 16, 28, .35);
+    --background: #090909;
 }
 
 * {
@@ -19,356 +14,364 @@
 
 body {
     min-height: 100vh;
-    padding: 35px 18px;
+    background:
+        radial-gradient(ellipse at top, #292020 0%, #090909 65%);
+    color: white;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    background:
-        radial-gradient(ellipse at top, #401016, transparent 55%),
-        var(--background);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
+    padding: 24px;
+}
+
+button {
+    font: inherit;
 }
 
 .app {
     width: 100%;
-    max-width: 650px;
-    padding: 26px;
-    border: 1px solid var(--border);
+    max-width: 1100px;
+    min-height: 680px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    background: #101010;
+    border: 1px solid #333;
     border-radius: 25px;
-    background: linear-gradient(145deg, #1d1d24, #101014);
-    box-shadow: 0 30px 90px rgba(0,0,0,.65);
     overflow: hidden;
+    box-shadow: 0 20px 70px #000;
 }
 
-.topo {
+.sidebar {
+    padding: 28px 18px;
+    background: linear-gradient(160deg, #191919, #080808);
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 38px;
+}
+
+.brand-icon {
+    font-size: 38px;
+}
+
+.brand h1 {
+    font-size: 29px;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.brand h1 span {
+    color: var(--primary);
+}
+
+.brand p {
+    color: #999;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 4px;
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: #aaa;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+}
+
+.team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.team-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    color: white;
+    background: #171717;
+    border: 1px solid #353535;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: .2s;
+}
+
+.team-button:hover {
+    border-color: var(--primary);
+    transform: translateX(3px);
+}
+
+.team-button.active {
+    background: linear-gradient(100deg, var(--secondary), #171717);
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 15px var(--glow);
+}
+
+.team-button img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
+
+.team-button span {
+    flex: 1;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.team-check {
+    color: var(--primary);
+    font-size: 18px;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 35px;
+    text-align: center;
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: 2px;
+    line-height: 1.8;
+}
+
+.sidebar-footer span {
+    font-size: 25px;
+}
+
+.calculator {
+    padding: 25px;
+    min-width: 0;
+}
+
+.topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 28px;
-}
-
-.marca {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
-
-.marca-icone {
-    width: 48px;
-    height: 48px;
-    display: grid;
-    place-items: center;
-    border-radius: 14px;
-    background: var(--accent);
-    color: white;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 25px;
-    font-weight: 800;
-}
-
-.marca h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
-
-.marca p {
-    margin-top: 5px;
-    color: #9999a3;
-    font-size: 9px;
-    letter-spacing: 2px;
-}
-
-.botao-config {
-    width: 46px;
-    height: 46px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--buttons);
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-.identidade {
-    min-height: 180px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 22px;
-    padding: 25px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background:
-        linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.48)),
-        radial-gradient(circle at 80% 50%, #70202b, transparent 65%);
-}
-
-.escudo-fundo {
-    position: absolute;
-    inset: 0;
-    background-image: var(--crest-image);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    opacity: .23;
-    filter: grayscale(35%);
-    pointer-events: none;
-}
-
-.time-info {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-}
-
-.etiqueta {
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 3px;
-}
-
-.time-info h2 {
-    margin: 12px 0 7px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(22px, 6vw, 34px);
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.time-info p {
-    color: #b4b4bd;
-    font-size: 10px;
-    letter-spacing: 2px;
-}
-
-.calculadora {
-    position: relative;
-    padding: 22px;
-    border: 1px solid var(--border);
-    border-radius: 21px;
-    background: rgba(8,8,11,.88);
-    box-shadow: 0 15px 35px rgba(0,0,0,.3);
-}
-
-.visor-area {
     margin-bottom: 20px;
 }
 
-.visor-legenda {
-    display: block;
-    margin-bottom: 10px;
-    color: #888892;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 3px;
-}
-
-#visor {
-    width: 100%;
-    height: 100px;
-    padding: 15px;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    outline: none;
-    background: #111116;
-    color: var(--accent);
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(25px, 7vw, 39px);
-    font-weight: 700;
-    text-align: right;
-}
-
-.botoes {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 11px;
-}
-
-.botoes button {
-    min-width: 0;
-    height: 65px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--buttons);
-    color: white;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .2s ease;
-}
-
-.botoes button:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent);
-    box-shadow: 0 5px 20px color-mix(in srgb, var(--accent) 25%, transparent);
-}
-
-.botoes button:active {
-    transform: scale(.96);
-}
-
-.botoes .especial,
-.botoes .operador {
-    color: var(--accent);
-    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-}
-
-.botoes .igual {
-    grid-row: span 2;
-    height: auto;
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-    font-size: 28px;
-}
-
-.botoes .zero {
-    grid-column: span 2;
-}
-
-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 23px;
-    color: #777780;
+.small-label {
+    color: #888;
     font-size: 9px;
-    font-weight: 700;
     letter-spacing: 2px;
 }
 
-/* PERSONALIZACAO */
+.topbar h2 {
+    font-size: 23px;
+    margin-top: 5px;
+}
 
-#painelConfig {
-    width: min(92%, 420px);
-    max-height: 90vh;
-    margin: auto;
-    padding: 0;
-    overflow: auto;
-    border: 1px solid #41414a;
-    border-radius: 22px;
-    background: #17171d;
+.live-dot {
+    color: #65d98c;
+    font-size: 10px;
+}
+
+.display-area {
+    position: relative;
+    min-height: 190px;
+    padding: 20px;
+    border-radius: 18px;
+    border: 1px solid var(--primary);
+    background: linear-gradient(135deg, #202020, #080808);
+    box-shadow: inset 0 0 30px #000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.display-area::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--crest-watermark) center / 180px no-repeat;
+    opacity: .10;
+    pointer-events: none;
+}
+
+.display-team {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #bbb;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.display-team img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.history,
+.display,
+.display-caption {
+    position: relative;
+    z-index: 1;
+}
+
+.history {
+    min-height: 18px;
+    color: #999;
+    font-size: 13px;
+}
+
+.display {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(38px, 7vw, 58px);
+    font-weight: bold;
+}
+
+.display-caption {
+    color: var(--primary);
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-top: 5px;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 11px;
+    margin-top: 18px;
+}
+
+.key {
+    min-width: 0;
+    height: 68px;
+    border-radius: 13px;
+    background: linear-gradient(145deg, #292929, #111);
+    border: 1px solid #444;
     color: white;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #050505;
+    transition: .12s;
 }
 
-#painelConfig::backdrop {
-    background: rgba(0,0,0,.82);
-    backdrop-filter: blur(8px);
+.key:hover {
+    border-color: var(--primary);
+    filter: brightness(1.2);
 }
 
-.config-conteudo {
-    padding: 25px;
+.key:active {
+    transform: translateY(3px);
+    box-shadow: none;
 }
 
-.config-topo {
+.key.memory {
+    height: 48px;
+    color: #ccc;
+    font-size: 15px;
+}
+
+.key.clear {
+    color: var(--primary);
+}
+
+.key.operator,
+.key.equals {
+    background: linear-gradient(145deg, var(--primary), var(--secondary));
+    border-color: var(--primary);
+}
+
+.key.zero {
+    grid-column: span 2;
+}
+
+.key.equals {
+    grid-column: span 2;
+}
+
+.calculator-footer {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 25px;
+    margin-top: 22px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    color: #888;
+    font-size: 10px;
+    letter-spacing: 2px;
 }
 
-.config-topo h2 {
-    margin-top: 10px;
-    font-size: 21px;
+.calculator-footer span:last-child {
+    color: var(--primary);
 }
 
-.fechar {
-    width: 38px;
-    height: 38px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: #292930;
-    color: white;
-    font-size: 23px;
-    cursor: pointer;
-}
-
-.config-conteudo label {
-    display: block;
-    margin: 17px 0 9px;
-    color: #d4d4dc;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.config-conteudo input[type="text"] {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #41414a;
-    border-radius: 11px;
-    outline: none;
-    background: #0e0e13;
-    color: white;
-    font-size: 14px;
-}
-
-.config-conteudo input[type="file"] {
-    width: 100%;
-    color: #ccc;
-    font-size: 12px;
-}
-
-.config-conteudo input[type="color"] {
-    width: 100%;
-    height: 48px;
-    padding: 4px;
-    border: 1px solid #41414a;
-    border-radius: 10px;
-    background: #0e0e13;
-    cursor: pointer;
-}
-
-.aplicar,
-.restaurar {
-    width: 100%;
-    min-height: 48px;
-    margin-top: 20px;
-    border: 0;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.aplicar {
-    background: var(--accent);
-    color: white;
-}
-
-.restaurar {
-    margin-top: 10px;
-    border: 1px solid #555;
-    background: transparent;
-    color: white;
-}
-
-@media (max-width: 480px) {
+@media (max-width: 650px) {
     body {
-        padding: 15px 10px;
+        padding: 10px;
+        align-items: flex-start;
     }
 
     .app {
-        padding: 17px;
+        grid-template-columns: 1fr;
+        min-height: auto;
     }
 
-    .calculadora {
-        padding: 15px;
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #333;
+        padding: 18px;
     }
 
-    .botoes {
+    .brand {
+        margin-bottom: 18px;
+    }
+
+    .team-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .team-button {
+        padding: 7px;
+        gap: 7px;
+    }
+
+    .team-button img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .team-button span {
+        font-size: 11px;
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+
+    .calculator {
+        padding: 16px;
+    }
+
+    .keypad {
         gap: 8px;
     }
 
-    .botoes button {
+    .key {
         height: 58px;
-        font-size: 18px;
-    }
-
-    .botoes .igual {
-        height: auto;
+        font-size: 22px;
     }
 }
