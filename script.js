@@ -15,7 +15,7 @@ const teams = [
         short: "CORINTHIANS",
         crest: "https://media.api-sports.io/football/teams/131.png",
         primary: "#ed101c",
-        secondary: "#8b0000
+        secondary: "#8b0000"
     },
     {
         name: "Palmeiras",
