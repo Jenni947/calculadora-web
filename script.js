@@ -8,7 +8,6 @@ let operator = null;
 let resetNext = false;
 let memory = 0;
 
-// Clubes e escudos
 const teams = [
     {
         name: "Corinthians",
@@ -54,10 +53,46 @@ const teams = [
     }
 ];
 
+// MOSTRAR RESULTADO
 function render() {
     display.textContent = current.replace(".", ",");
 }
 
+// CRIAR BOTÕES DOS TIMES
+function createTeams() {
+    teamList.innerHTML = "";
+
+    teams.forEach(team => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "team-button";
+        button.dataset.team = team.name;
+
+        const img = document.createElement("img");
+        img.src = team.crest;
+        img.alt = "Escudo do " + team.name;
+
+        img.onerror = () => {
+            img.alt = "Escudo indisponível";
+        };
+
+        const name = document.createElement("span");
+        name.textContent = team.name;
+
+        const check = document.createElement("strong");
+        check.className = "team-check";
+
+        button.append(img, name, check);
+
+        button.addEventListener("click", () => {
+            selectTeam(team);
+        });
+
+        teamList.appendChild(button);
+    });
+}
+
+// ESCOLHER TIME
 function selectTeam(team) {
     document.documentElement.style.setProperty("--primary", team.primary);
     document.documentElement.style.setProperty("--secondary", team.secondary);
@@ -68,6 +103,7 @@ function selectTeam(team) {
     document.getElementById("footer-team").textContent = "VAI " + team.short + "!";
 
     const crest = document.getElementById("main-crest");
+
     crest.src = team.crest;
     crest.alt = "Escudo do " + team.name;
 
@@ -77,28 +113,28 @@ function selectTeam(team) {
     );
 
     document.querySelectorAll(".team-button").forEach(button => {
-        button.classList.toggle("active", button.dataset.team === team.name);
+        const selected = button.dataset.team === team.name;
+
+        button.classList.toggle("active", selected);
         button.querySelector(".team-check").textContent =
-            button.dataset.team === team.name ? "✓" : "";
+            selected ? "✓" : "";
     });
 }
 
-teams.forEach(team => {
-    const button = document.createElement("button");
-    button.className = "team-button";
-    button.dataset.team = team.name;
+// LIMPAR
+function clear() {
+    current = "0";
+    previous = null;
+    operator = null;
+    resetNext = false;
+    history.textContent = "";
+    render();
+}
 
-    button.innerHTML = `
-        <img src="${team.crest}" alt="">
-        <span>${team.name}</span>
-        <strong class="team-check"></strong>
-    `;
-
-    button.addEventListener("click", () => selectTeam(team));
-    teamList.appendChild(button);
-});
-
+// DIGITAR NÚMEROS
 function input(value) {
+    if (current === "Erro") current = "0";
+
     if (resetNext) {
         current = value;
         resetNext = false;
@@ -107,18 +143,23 @@ function input(value) {
     } else {
         current += value;
     }
+
     render();
 }
 
-function clear() {
-    current = "0";
-    previous = null;
-    operator = null;
-    history.textContent = "";
-    resetNext = false;
+// DECIMAL
+function decimal() {
+    if (resetNext || current === "Erro") {
+        current = "0.";
+        resetNext = false;
+    } else if (!current.includes(".")) {
+        current += ".";
+    }
+
     render();
 }
 
+// CALCULAR
 function calculate() {
     if (previous === null || operator === null) return;
 
@@ -127,13 +168,21 @@ function calculate() {
     let result;
 
     switch (operator) {
-        case "+": result = a + b; break;
-        case "-": result = a - b; break;
-        case "*": result = a * b; break;
+        case "+":
+            result = a + b;
+            break;
+        case "-":
+            result = a - b;
+            break;
+        case "*":
+            result = a * b;
+            break;
         case "/":
             if (b === 0) {
                 current = "Erro";
-                history.textContent = "Não é possível dividir por zero";
+                history.textContent = "Divisão por zero!";
+                previous = null;
+                operator = null;
                 render();
                 return;
             }
@@ -141,42 +190,43 @@ function calculate() {
             break;
     }
 
-    if (!Number.isFinite(result)) {
-        current = "Erro";
-    } else {
-        history.textContent = `${previous} ${operator} ${current} =`;
-        current = String(Number(result.toPrecision(12)));
-    }
+    history.textContent = `${previous} ${operator} ${current} =`;
+
+    current = Number.isFinite(result)
+        ? String(Number(result.toPrecision(12)))
+        : "Erro";
 
     previous = null;
     operator = null;
     resetNext = true;
+
     render();
 }
 
+// BOTÕES DA CALCULADORA
 document.querySelectorAll(".key").forEach(button => {
     button.addEventListener("click", () => {
         const value = button.dataset.value;
         const action = button.dataset.action;
 
         if (value !== undefined) {
-            if ("0123456789".includes(value) && value.length === 1) {
+            if (/^\d$/.test(value)) {
                 input(value);
             } else if (value === ".") {
-                if (resetNext) {
-                    current = "0.";
-                    resetNext = false;
-                } else if (!current.includes(".")) {
-                    current += ".";
-                }
-                render();
+                decimal();
             } else {
-                if (operator && !resetNext) calculate();
+                if (current === "Erro") return;
+
+                if (operator && !resetNext) {
+                    calculate();
+                }
+
                 previous = current;
                 operator = value;
                 resetNext = true;
                 history.textContent = `${current} ${operator}`;
             }
+
             return;
         }
 
@@ -186,25 +236,21 @@ document.querySelectorAll(".key").forEach(button => {
                 break;
 
             case "decimal":
-                if (resetNext) {
-                    current = "0.";
-                    resetNext = false;
-                } else if (!current.includes(".")) {
-                    current += ".";
-                }
-                render();
+                decimal();
                 break;
 
             case "sign":
-                if (current !== "0") {
+                if (current !== "0" && current !== "Erro") {
                     current = String(-Number(current));
                     render();
                 }
                 break;
 
             case "percent":
-                current = String(Number(current) / 100);
-                render();
+                if (current !== "Erro") {
+                    current = String(Number(current) / 100);
+                    render();
+                }
                 break;
 
             case "equals":
@@ -232,9 +278,11 @@ document.querySelectorAll(".key").forEach(button => {
     });
 });
 
-// Iniciar com Corinthians
+// INICIAR
+createTeams();
 selectTeam(teams[0]);
 render();
+
 
 
         
