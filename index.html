@@ -5,12 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Calculadora</title>
+    <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 
-    <h1>Minha primeira calculadora</h1>
+    <main class="calculadora">
+        <h1>Minha Calculadora</h1>
 
-    <p>Bem-vindo ao meu primeiro projeto web!</p>
+        <input type="text" id="visor" value="0" readonly>
 
+        <div class="botoes">
+            <button class="especial" onclick="limpar()">AC</button>
+            <button class="especial" onclick="apagar()">⌫</button>
+            <button class="operador" onclick="adicionar('/')">÷</button>
+            <button class="operador" onclick="adicionar('*')">×</button>
+
+            <button onclick="adicionar('7')">7</button>
+            <button onclick="adicionar('8')">8</button>
+            <button onclick="adicionar('9')">9</button>
+            <button class="operador" onclick="adicionar('-')">−</button>
+
+            <button onclick="adicionar('4')">4</button>
+            <button onclick="adicionar('5')">5</button>
+            <button onclick="adicionar('6')">6</button>
+            <button class="operador" onclick="adicionar('+')">+</button>
+
+            <button onclick="adicionar('1')">1</button>
+            <button onclick="adicionar('2')">2</button>
+            <button onclick="adicionar('3')">3</button>
+            <button class="igual" onclick="calcular()">=</button>
+
+            <button class="zero" onclick="adicionar('0')">0</button>
+            <button onclick="adicionar('.')">.</button>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
+
